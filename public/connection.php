@@ -8,5 +8,4 @@ if ($connection->errorCode() != null) {
     die();
 }
 
-echo "Połączenie udane";
  ?>

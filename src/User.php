@@ -73,11 +73,76 @@ class User
 
             return (bool)$result;
         } else {
+            return null;
+        }
+    }
 
+
+    public static function loadUserById(PDO $conn, $id){
+        $stmt = $conn->prepare('SELECT * FROM Users WHERE id=:id');
+        $result = $stmt->execute(['id'=> $id]);
+
+        if ($result === true && $stmt->rowCount() > 0) {
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            #tworzymy nowego użytkownika i wczytujemy dane
+            $loadedUser = new User();
+            $loadedUser->id = $row['id'];
+            $loadedUser->username = $row['username'];
+            $loadedUser->email = $row['email'];
+            $loadedUser->hashPassword = $row['hash_password'];
+            return $loadedUser;
+        } else {
+            return null;
+        }
+    }
+
+
+    static public function loadAllUsers(PDO $conn){
+        $sql = "SELECT * FROM Users";
+
+        #tablica, do której  zostaną załadowane obiekty
+        $ret = [];
+        $result = $conn->query($sql);
+
+        if ($result !== false && $result->rowCount() != 0) {
+            foreach ($result as $row) {
+
+                $loadedUser = new User();
+                $loadedUser->id = $row['id'];
+                $loadedUser->username = $row['username'];
+                $loadedUser->email = $row['email'];
+                $loadedUser->hashPassword = $row['hash_password'];
+
+                $ret[] = $loadedUser;
+
+            }
+        }
+            return $ret;
+    }
+
+    static public function showUserByEmail(PDO $connection, $email)
+    {
+        $stmt = $connection->prepare('SELECT * FROM user WHERE email=:email');
+        $result = $stmt->execute(['email'=> $email]);
+
+        if ($result === true && $stmt->rowCount() > 0) {
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            $loadedUser = new User();
+            $loadedUser->id = $row['id'];
+            $loadedUser->username = $row['username'];
+            $loadedUser->hashPassword = $row['hash_password'];
+            $loadedUser->email = $row['email'];
+            return $loadedUser;
         }
 
-    }
+        return null;
 }
+
+
+
+}
+
 
 
 
