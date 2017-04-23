@@ -2,6 +2,7 @@
 include_once '../bootstrap.php';
 
 
+
 $user = new User();
 $user->setEmail('tt@tt.pl');
 $user->setUsername('test');
