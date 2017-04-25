@@ -137,9 +137,40 @@ class User
         }
 
         return null;
-}
+    }
 
+    public function saveToDB(PDO $conn)
+    {
+        if ($this->id == -1) {
+            return false;
+        } else {
+            $stmt = $conn->prepare(
+            'UPDATE Users SET username=:username, email=:email, hash_password=:hash_password WHERE id=:id'
+            );
+            $result = $stmt->execute(
+            [ 'username'=> $this->username,'email' => $this->email, 'hash_password' => $this->hashPassword,'id'=> $this->id]
+            );
 
+            if ($result === true) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function delete(PDO $conn)
+    {
+        if ($this->id != -1) {
+            $stmt = $conn->prepare('DELETE FROM Users WHERE id=:id');
+            $result = $stmt->execute(['id'=> $this->id]);
+                if ($result === true) {
+                    $this->id = -1;
+                    return true;
+                }
+                return false;
+        }
+        return true;
+    }
 
 }
 
