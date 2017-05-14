@@ -52,13 +52,13 @@ class User
         $this->email = $email;
     }
 
-    public function save(PDO $pdo)
+    public function savetoDB(PDO $pdo)
     {
         if ($this->id == -1) {
             // przygotowanie zapytania
             $sql = "INSERT INTO Users(username, email, hash_password) VALUES (:username, :email, :hashPassword)";
-
             $prepare = $pdo->prepare($sql);
+
             // Wysłanie zapytania do bazy z kluczami i wartościami do podmienienia
             $result = $prepare->execute(
                 [
@@ -70,11 +70,19 @@ class User
 
             // Pobranie ostatniego ID dodanego rekordu
             $this->id = $pdo->lastInsertId();
-
             return (bool)$result;
         } else {
-            return null;
+            $stmt = $pdo->prepare(
+                'UPDATE Users SET username=:username, email=:email, hash_password=:hash_password WHERE id=:id'
+            );
+            $result = $stmt->execute(
+                [ 'username'=> $this->username,'email'=> $this->email, 'hash_password'=> $this->hashPassword,'id'=> $this->id]
+            );
+            if ($result === true) {
+                return true;
+            }
         }
+        return false;
     }
 
 
@@ -123,7 +131,7 @@ class User
 
     static public function showUserByEmail(PDO $connection, $email)
     {
-        $stmt = $connection->prepare('SELECT * FROM user WHERE email=:email');
+        $stmt = $connection->prepare('SELECT * FROM Users WHERE email=:email');
         $result = $stmt->execute(['email'=> $email]);
 
         if ($result === true && $stmt->rowCount() > 0) {
@@ -139,23 +147,22 @@ class User
         return null;
     }
 
-    public function saveToDB(PDO $conn)
+    static public function showUserByUsername(PDO $connection, $username)
     {
-        if ($this->id == -1) {
-            return false;
-        } else {
-            $stmt = $conn->prepare(
-            'UPDATE Users SET username=:username, email=:email, hash_password=:hash_password WHERE id=:id'
-            );
-            $result = $stmt->execute(
-            [ 'username'=> $this->username,'email' => $this->email, 'hash_password' => $this->hashPassword,'id'=> $this->id]
-            );
+        $stmt = $connection->prepare('SELECT * FROM Users WHERE username=:username');
+        $result = $stmt->execute(['username'=> $username]);
 
-            if ($result === true) {
-                return true;
-            }
+        if ($result === true && $stmt->rowCount() > 0) {
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            $loadedUser = new User();
+            $loadedUser->id = $row['id'];
+            $loadedUser->username = $row['username'];
+            $loadedUser->hashPassword = $row['hash_password'];
+            $loadedUser->email = $row['email'];
+            return $loadedUser;
         }
-        return false;
+
+        return null;
     }
 
     public function delete(PDO $conn)
