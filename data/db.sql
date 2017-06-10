@@ -43,18 +43,16 @@ INSERT INTO `Comment` (`id`, `userId`, `postId`, `creation_date`, `text`) VALUES
 (2, 2, 5, '2017-04-23 00:00:00', 'first comment'),
 (6, 2, 5, '2017-05-01 20:00:28', 'this is second comment'),
 (7, 2, 5, '2017-05-01 20:31:28', 'I want to comment'),
-(8, 2, 5, '2017-05-01 20:31:33', 'I want to comment'),
+(8, 2, 5, '2017-05-01 20:31:33', 'It is not possible'),
 (9, 2, 5, '2017-05-01 20:33:48', 'one more comment'),
-(10, 2, 5, '2017-05-01 20:34:18', 'one more comment'),
+(10, 2, 5, '2017-05-01 20:34:18', 'more and more comment'),
 (11, 2, 5, '2017-05-01 20:34:51', 'one more comment'),
 (12, 1, 1, '2017-05-01 20:35:10', 'This is second comment'),
-(13, 2, 5, '2017-05-04 20:47:40', 'this is second comment'),
+(13, 2, 5, '2017-05-04 20:47:40', 'this is third comment'),
 (16, 1, 19, '2017-05-04 21:26:56', 'no comment'),
 (17, 1, 19, '2017-05-04 21:26:59', 'no comment'),
 (18, 1, 19, '2017-05-04 21:34:15', 'This is second comment'),
 (19, 1, 19, '2017-05-04 21:34:20', 'This is second comment'),
-(20, 1, 22, '2017-05-05 19:07:39', 'komencik'),
-(21, 1, 23, '2017-05-06 17:46:18', 'komencik'),
 (22, 1, 23, '2017-05-06 17:46:24', 'komencik');
 
 -- --------------------------------------------------------
