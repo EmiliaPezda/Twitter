@@ -1,18 +1,18 @@
-## Ładowanie bazy
+## Loading database
 
-``mysql -uUŻYTKOWNIK -p NAZWA_BAZY < data/db.sql``
+``mysql -uUSERNAME -p DATABASE_NAME < data/db.sql``
 
-## Zarejestruj użytkownika:
+## REGISTER USER:
 ``Twitter/public/admin/register.php``
 
-## Zaloguj się:
+##log in:
 ``Twitter/public/admin/login.php``
 
-Aplikacja pozwala na:
+This app contains below functions:
 
-- dodawanie niezarejestrowanego użytkownika
-- logowanie
-- wyświetlanie i dodawanie postów
-- wyświetlanie i dodawanie komentarzy
-- przesyłanie wiadomości do innych użytkowników
-* zmianę danych użytkownika.
+- registering new user
+- logging in
+- displaying and adding tweets
+- displaying and adding comments
+- sending and receiving messages
+- changing user-s data
