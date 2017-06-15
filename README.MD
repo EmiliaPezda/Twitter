@@ -5,7 +5,7 @@
 ## REGISTER USER:
 ``Twitter/public/admin/register.php``
 
-##log in:
+## log in:
 ``Twitter/public/admin/login.php``
 
 This app contains below functions:
